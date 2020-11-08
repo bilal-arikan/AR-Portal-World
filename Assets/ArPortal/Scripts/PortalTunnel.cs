@@ -43,7 +43,7 @@ public class PortalTunnel : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.transform != device)
+        if (other.tag != "Player")
             return;
         inOtherWorld = !inOtherWorld;
         if (inOtherWorld)
