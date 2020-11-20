@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
     public ARInputManager InputManager;
     public ARCameraManager Camera;
     public ARCameraBackground Background;
-    public ARPlaneManager Plane;
     [Space]
     public ARPlacementInteractable aRPlacementInteractable;
     public ARGestureInteractor aRGestureInteractor;
@@ -23,6 +22,7 @@ public class GameController : MonoBehaviour
     public GameObject PortalPrefab;
     public GameObject BoxPrefab;
     [Space]
+    public Button AboutBtn;
     public Toggle PlacePortalBtn;
     public Toggle PlaceBoxBtn;
     public Toggle DeleteSelctdBtn;
@@ -37,13 +37,16 @@ public class GameController : MonoBehaviour
         {
             Debug.Log(obj.name + " " + arP.name);
         });
+        AboutBtn.onClick.AddListener(() =>
+        {
+            Application.OpenURL("https://github.com/bilal-arikan/AR-Portal-World");
+        });
         PlacePortalBtn.onValueChanged.AddListener((v) =>
         {
             if (v)
             {
                 aRPlacementInteractable.gameObject.SetActive(true);
                 aRPlacementInteractable.placementPrefab = PortalPrefab;
-                Debug.Log("Click Portal");
             }
         });
         PlaceBoxBtn.onValueChanged.AddListener((v) =>
@@ -52,7 +55,6 @@ public class GameController : MonoBehaviour
             {
                 aRPlacementInteractable.gameObject.SetActive(true);
                 aRPlacementInteractable.placementPrefab = BoxPrefab;
-                Debug.Log("Click Box");
             }
         });
         DeleteSelctdBtn.onValueChanged.AddListener((v) =>
@@ -60,7 +62,6 @@ public class GameController : MonoBehaviour
             if (v)
             {
                 aRPlacementInteractable.gameObject.SetActive(false);
-                Debug.Log("Click Del");
             }
         });
     }
