@@ -1,4 +1,7 @@
 ﻿{
+    "editor.autoIndent": "advanced",
+    "editor.codeActionsOnSave": {"source.fixAll": true,"source.organizeImports": true},
+    "editor.formatOnSave": true,
     "files.exclude":
     {
         "**/.DS_Store":true,
