@@ -15,46 +15,53 @@ public class GameController : MonoBehaviour
     public ARInputManager InputManager;
     public ARCameraManager Camera;
     public ARCameraBackground Background;
+    public ARPlaneManager Plane;
     [Space]
     public ARPlacementInteractable aRPlacementInteractable;
     public ARGestureInteractor aRGestureInteractor;
     [Space]
     public GameObject PortalPrefab;
     public GameObject BoxPrefab;
-    public MeshRenderer PortalRend;
     [Space]
-    public Button PlacePortalBtn;
-    public Button PlaceBoxBtn;
-    public Button DeleteSelctdBtn;
+    public Toggle PlacePortalBtn;
+    public Toggle PlaceBoxBtn;
+    public Toggle DeleteSelctdBtn;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update 
     void Start()
     {
         Instance = this;
+        aRPlacementInteractable.gameObject.SetActive(false);
+
         aRPlacementInteractable.onObjectPlaced.AddListener((arP, obj) =>
         {
             Debug.Log(obj.name + " " + arP.name);
         });
-        PlacePortalBtn.onClick.AddListener(() =>
+        PlacePortalBtn.onValueChanged.AddListener((v) =>
         {
-            aRPlacementInteractable.placementPrefab = PortalPrefab;
-            Debug.Log("Click Portal");
+            if (v)
+            {
+                aRPlacementInteractable.gameObject.SetActive(true);
+                aRPlacementInteractable.placementPrefab = PortalPrefab;
+                Debug.Log("Click Portal");
+            }
         });
-        PlaceBoxBtn.onClick.AddListener(() =>
+        PlaceBoxBtn.onValueChanged.AddListener((v) =>
         {
-            aRPlacementInteractable.placementPrefab = BoxPrefab;
-            Debug.Log("Click Box");
+            if (v)
+            {
+                aRPlacementInteractable.gameObject.SetActive(true);
+                aRPlacementInteractable.placementPrefab = BoxPrefab;
+                Debug.Log("Click Box");
+            }
         });
-        DeleteSelctdBtn.onClick.AddListener(() =>
+        DeleteSelctdBtn.onValueChanged.AddListener((v) =>
         {
-            Debug.Log("Click Del");
-
+            if (v)
+            {
+                aRPlacementInteractable.gameObject.SetActive(false);
+                Debug.Log("Click Del");
+            }
         });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
