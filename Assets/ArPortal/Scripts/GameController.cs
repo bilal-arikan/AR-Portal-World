@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -21,11 +22,15 @@ public class GameController : MonoBehaviour
     [Space]
     public GameObject PortalPrefab;
     public GameObject BoxPrefab;
+    public GameObject[] ItemPrefabs;
     [Space]
     public Button AboutBtn;
     public Toggle PlacePortalBtn;
-    public Toggle PlaceBoxBtn;
-    public Toggle DeleteSelctdBtn;
+    public Toggle EmptyPlacerBtn;
+    public Button ClearScenedBtn;
+    public RectTransform PlaceItemBtns;
+
+    private float nextSpawnItemTime = 5;
 
     // Start is called before the first frame update 
     void Start()
@@ -45,24 +50,66 @@ public class GameController : MonoBehaviour
         {
             if (v)
             {
-                aRPlacementInteractable.gameObject.SetActive(true);
                 aRPlacementInteractable.placementPrefab = PortalPrefab;
             }
         });
-        PlaceBoxBtn.onValueChanged.AddListener((v) =>
+        EmptyPlacerBtn.onValueChanged.AddListener((v) =>
         {
             if (v)
             {
-                aRPlacementInteractable.gameObject.SetActive(true);
-                aRPlacementInteractable.placementPrefab = BoxPrefab;
+                aRPlacementInteractable.placementPrefab = null;
             }
         });
-        DeleteSelctdBtn.onValueChanged.AddListener((v) =>
+        ClearScenedBtn.onClick.AddListener(() =>
         {
-            if (v)
+            var objs = FindObjectsOfType<SelectableObject>().ToArray();
+            foreach (var obj in objs)
             {
-                aRPlacementInteractable.gameObject.SetActive(false);
+                DestroyImmediate(obj.gameObject);
             }
         });
+        var btns = PlaceItemBtns.GetComponentsInChildren<Toggle>();
+        foreach (var btn in btns)
+        {
+            btn.onValueChanged.AddListener(v =>
+            {
+                if (v)
+                {
+                    aRPlacementInteractable.placementPrefab = ItemPrefabs[btn.transform.GetSiblingIndex()];
+                }
+            });
+        }
+        PlaneManager.planesChanged += OnPlanesChanged;
+    }
+
+    private void OnPlanesChanged(ARPlanesChangedEventArgs pm)
+    {
+        foreach (var plane in pm.added)
+        {
+            Debug.Log("Added " + plane.name);
+        }
+        foreach (var plane in pm.added)
+        {
+            Debug.Log("Updated " + plane.name);
+        }
+        foreach (var plane in pm.added)
+        {
+            Debug.Log("Removed " + plane.name);
+        }
+    }
+
+    private void Update()
+    {
+        if (Time.time > nextSpawnItemTime)
+        {
+            SpawnRandomItem();
+            nextSpawnItemTime = Time.time + UnityEngine.Random.Range(2f, 4f);
+        }
+    }
+
+    void SpawnRandomItem()
+    {
+        var itemPrefab = ItemPrefabs[UnityEngine.Random.Range(0, ItemPrefabs.Length - 1)];
+        // var position = 
     }
 }
