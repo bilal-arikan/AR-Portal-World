@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public GameObject PortalPrefab;
     public GameObject BoxPrefab;
     public GameObject[] ItemPrefabs;
+    public GameObject SpawnParticlePrefab;
     [Space]
     public Button AboutBtn;
     public Toggle PlacePortalBtn;

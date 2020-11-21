@@ -48,6 +48,10 @@ public class SelectableObject : MonoBehaviour
         {
             DestroyImmediate(gameObject);
         });
+        if (GameController.Instance.SpawnParticlePrefab)
+        {
+            Destroy(Instantiate(GameController.Instance.SpawnParticlePrefab, transform), 3);
+        }
     }
 
     private void OnEnable()

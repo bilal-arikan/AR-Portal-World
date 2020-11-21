@@ -3629,6 +3629,7 @@ MonoBehaviour:
   - {fileID: 5706593613429078582, guid: 2afaa76647e8d074898511b5a14d360b, type: 3}
   - {fileID: 7937627343333193708, guid: cf4321c3f679ecf498544326cb11651c, type: 3}
   - {fileID: 3567211701442154071, guid: 9dc592016044c044e90ddb4d033e423a, type: 3}
+  SpawnParticlePrefab: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   AboutBtn: {fileID: 1912113561}
   PlacePortalBtn: {fileID: 721403555}
   EmptyPlacerBtn: {fileID: 1640258600}
